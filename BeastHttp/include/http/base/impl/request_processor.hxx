@@ -43,7 +43,7 @@ request_processor<Session>::provide(
 
             for (auto __it_value = resource_map.cbegin();
                  __it_value != resource_map.cend(); ++__it_value) {
-                if (regex_.match(__it_value->first, target.to_string())) {
+                if (regex_.match(__it_value->first, std::string(target))) {
                     auto& storage = const_cast<storage_type&>(__it_value->second);
 
                     this->execute(request, _flesh, storage);
@@ -56,7 +56,7 @@ request_processor<Session>::provide(
     if (resource_map_ and not invoked)
         for (auto __it_value = resource_map_->begin();
              __it_value != resource_map_->end(); ++__it_value) {
-            if (regex_.match(__it_value->first, target.to_string())) {
+            if (regex_.match(__it_value->first, std::string(target))) {
                 auto& storage = const_cast<storage_type&>(__it_value->second);
 
                 this->execute(request, _flesh, storage);
