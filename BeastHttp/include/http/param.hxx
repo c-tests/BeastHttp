@@ -6,6 +6,7 @@
 
 #include <tuple>
 #include <mutex>
+#include <string>
 
 #include <boost/lexical_cast.hpp>
 
@@ -17,7 +18,7 @@
         shared_block_p_->cur_pos_cb_ = shared_block_p_->regex_pack.size() - 1; \
     } \
     std::smatch what; \
-    const auto& target = request.target().to_string(); \
+    const auto& target = std::string(request.target()); \
     if (shared_block_p_->regex_.match( \
                 *(shared_block_p_->rp_iter_), target, what)) \
         for (size_t i = 1; i < what.size(); i++) \
@@ -33,7 +34,7 @@
     if (shared_block_p_->rp_iter_ == shared_block_p_->regex_pack.cbegin()) \
         shared_block_p_->rp_iter_++; \
     std::smatch what; \
-    const auto& target = request.target().to_string(); \
+    const auto& target = std::string(request.target()); \
     if (shared_block_p_->regex_.match( \
                 *(shared_block_p_->rp_iter_), target, what)) \
         for (size_t i = 1; i < what.size(); i++) \

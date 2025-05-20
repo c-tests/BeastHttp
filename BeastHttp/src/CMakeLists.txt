@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.11)
 
 project(BeastHttp VERSION 3.0 LANGUAGES CXX)
 
-find_package(Boost 1.70 COMPONENTS system thread)
+find_package(Boost 1.83 COMPONENTS system thread)
 find_package(OpenSSL COMPONENTS SSL Crypto)
 
 set(BEASTHTTP_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/../include)
@@ -12,6 +12,7 @@ set(BEASTHTTP_STATIC_DIR ${PROJECT_SOURCE_DIR}/../static)
 
 option(BEASTHTTP_USE_MAKE_SHARED "Allocate memory object with std::make_shared" ON)
 option(BEASTHTTP_BUILD_STATIC_LIBS "Build static lib for Boost.Asio/Boost.Beast" ON)
+option(BEASTHTTP_BUILD_EXAMPLES "Build example programs" OFF)
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/cmake/version.hxx.in"
@@ -61,16 +62,18 @@ endif()
 
 file(GLOB_RECURSE BEASTHTTP_HEADS ${BEASTHTTP_INCLUDE_PATH}/*.hxx)
 
-add_subdirectory("${BEASTHTTP_EXAMPLES_DIR}/reactor")
-if (OPENSSL_FOUND)
-    add_subdirectory("${BEASTHTTP_EXAMPLES_DIR}/reactor_ssl")
+if(BEASTHTTP_BUILD_EXAMPLES)
+    add_subdirectory("${BEASTHTTP_EXAMPLES_DIR}/reactor")
+    if (OPENSSL_FOUND)
+        add_subdirectory("${BEASTHTTP_EXAMPLES_DIR}/reactor_ssl")
+    endif()
+    add_subdirectory("${BEASTHTTP_EXAMPLES_DIR}/reactor_cxx11")
+    add_subdirectory("${BEASTHTTP_EXAMPLES_DIR}/reactor_timers")
+    if (OPENSSL_FOUND)
+        add_subdirectory("${BEASTHTTP_EXAMPLES_DIR}/reactor_flex")
+    endif()
+    add_subdirectory("${BEASTHTTP_EXAMPLES_DIR}/reactor_sse")
 endif()
-add_subdirectory("${BEASTHTTP_EXAMPLES_DIR}/reactor_cxx11")
-add_subdirectory("${BEASTHTTP_EXAMPLES_DIR}/reactor_timers")
-if (OPENSSL_FOUND)
-    add_subdirectory("${BEASTHTTP_EXAMPLES_DIR}/reactor_flex")
-endif()
-add_subdirectory("${BEASTHTTP_EXAMPLES_DIR}/reactor_sse")
 enable_testing ()
 add_subdirectory("${BEASTHTTP_TESTS_DIR}/display")
 add_subdirectory("${BEASTHTTP_TESTS_DIR}/basic_router")

@@ -4,6 +4,7 @@
 #include <http/base/config.hxx>
 
 #include <functional>
+#include <string>
 
 namespace _0xdead4ead {
 namespace http {
@@ -151,7 +152,7 @@ const_iterator<Session, Entry, Container>::const_iterator(
       cont_end_iter_{container.end()},
       request_{request},
       session_flesh_{flesh},
-      current_target_{request_.target().to_string()}
+      current_target_{std::string(request_.target())}
 {
     if (container.size() > 1)
         skip_target();

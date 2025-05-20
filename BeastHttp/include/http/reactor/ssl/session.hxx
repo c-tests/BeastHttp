@@ -147,13 +147,13 @@ public:
 
     using buffer_type = Buffer;
 
-    using connection_type = common::ssl::connection<Socket, base::strand_stream::asio_type>;
+    using connection_type = common::ssl::connection<Socket, base::strand_stream>;
 
     using socket_type = typename connection_type::socket_type;
 
     using ssl_stream_type = typename connection_type::ssl_stream_type;
 
-    using timer_type = base::timer<Timer, base::strand_stream::asio_type>;
+    using timer_type = base::timer<Timer, base::strand_stream>;
 
     using duration_type = typename timer_type::duration_type;
 

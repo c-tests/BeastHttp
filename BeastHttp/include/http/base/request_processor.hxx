@@ -2,6 +2,7 @@
 #define BEASTHTTP_BASE_REQUEST_PROCESSOR_HXX
 
 #include <http/base/traits.hxx>
+#include <string>
 
 #include <memory>
 

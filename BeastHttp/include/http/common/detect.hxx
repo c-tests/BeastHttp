@@ -33,13 +33,13 @@ template</*Message's buffer*/
          /*On timer expired handler holder*/
          template<typename> class OnTimer = std::function>
 class detect : public std::enable_shared_from_this<detect<BEASTHTTP_COMMON_DETECT_TMPL_ATTRIBUTES>>,
-        private base::strand_stream, base::detect<base::strand_stream::asio_type>, boost::asio::coroutine
+        private base::strand_stream, base::detect<base::strand_stream>, boost::asio::coroutine
 {
 public:
 
     using self_type = detect;
 
-    using base_type = base::detect<base::strand_stream::asio_type>;
+    using base_type = base::detect<base::strand_stream>;
 
     using protocol_type = Protocol;
 
@@ -47,7 +47,7 @@ public:
 
     using buffer_type = Buffer;
 
-    using timer_type = base::timer<Timer, base::strand_stream::asio_type>;
+    using timer_type = base::timer<Timer, base::strand_stream>;
 
     using duration_type = typename timer_type::duration_type;
 
